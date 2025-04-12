@@ -1,0 +1,28 @@
+Alur : 
+	User :
+	- Pendaftaran : 
+		- User melakukan input : username, role, password, konfirmasi password melalui form input lalu di kirim ke UserController.
+		- UserController Proses :
+		- hasil input dimasukan ke dalam object UserRegistrationRequest terdiri dari :
+
+			- username (berisi email/nohp)
+			- password 
+			- password_konfirmation
+			- role (admin / pengajar / santri)
+
+		- selanjutnya jalankan method save dari UserService dengan object UserRegisterRequest sebagai argumen.
+		- UserService Proses : 
+		- lakukan validasi terhadap object UserRegistrationRequest:
+			- cek user dengan username terkait, apakah sudah terdaftar.
+			- cek apakah password dan password_konfirmation itu sama.
+			- cek apakah input ada yang kosong / null.
+			- jika terdapat kegagalan validasi throw pesan error yang berkaitan.
+		- Jika validasi lolos : 
+			- buat object User terdiri dari : 
+				- user_id (otomatis oleh uniqid())
+				- username
+				- password 
+				- role
+				- created_at (otomatis diisi dengan date('Y-m-d H:i:s'))
+				- updated_at (otomatis diisi dengan date('Y-m-d H:i:s'))
+				- deleted_at (null)
