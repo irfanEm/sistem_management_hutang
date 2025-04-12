@@ -1,0 +1,75 @@
+/* CSS Kustom */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bg-gradient {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  }
+  
+  .badge {
+    font-size: 0.9em;
+    padding: 0.5em 0.75em;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+  }
+  
+  .navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  /* login - page */
+
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: #fff;
+  }
+  .login-card .card-header {
+    background: #fff;
+    border-bottom: none;
+    border-radius: 15px 15px 0 0;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .login-card .card-body {
+    padding: 1.5rem;
+  }
+  .login-card .form-control {
+    border-radius: 10px;
+    padding: 10px 15px;
+  }
+  .login-card .btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 600;
+    width: 100%;
+  }
+  .login-card .btn-primary:hover {
+    opacity: 0.9;
+  }
+  .login-card .text-muted {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .login-card .text-muted a {
+    color: #667eea;
+    text-decoration: none;
+  }
