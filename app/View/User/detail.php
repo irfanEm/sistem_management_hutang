@@ -15,7 +15,7 @@
               <div class="col-md-4">
                 <!-- Foto Profil -->
                 <div class="text-center mb-4">
-                  <img src="<?= asset('images/muslim-avatar.png') ?>" class="img-fluid rounded-circle" alt="Foto Profil">
+                  <img src="<?= asset('assets/images/muslim-avatar.png') ?>" class="img-fluid rounded-circle" alt="Foto Profil">
                 </div>
               </div>
               <div class="col-md-8">

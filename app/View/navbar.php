@@ -1,152 +1,112 @@
-<!-- <nav class="navbar navbar-expand-lg border-bottom border-body shadow-sm">
-  <div class="container-fluid"> -->
-    <!-- Teks SIASHAF hanya untuk mobile view -->
-    <!-- <a class="navbar-brand d-lg-none" href="/">SIASHAF</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01"> -->
-      <!-- Teks Hidden brand tetap tampil pada layar besar -->
-      <!-- <a class="navbar-brand d-none d-lg-block" href="/">SIASHAF</a>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/admin/beranda">Beranda</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Master</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/admin/master/users">User</a></li>
-            <li><a class="dropdown-item" href="/admin/master/guru">Guru</a></li>
-            <li><a class="dropdown-item" href="/admin/master/murid">Santri</a></li>
-            <li><a class="dropdown-item" href="/admin/master/hafalan">Hafalan</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/absensi" >Absensi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/hafalan" >Hafalan</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <a class="btn btn-danger fw-bold rounded-pill" href="/users/logout">Logout</a>
-      </form>
-    </div>
-  </div>
-</nav> -->
-
 <!-- Baru -->
-   <!-- Navbar -->
-   <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="/admin/beranda">
-        <i class="fas fa-book me-2"></i>Admin Absensi Hafalan
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="/admin/beranda"><i class="fas fa-home me-1"></i>Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-chart-line me-1"></i>Laporan</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-cog me-1"></i>Pengaturan</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
-          </li>
-        </ul>
+       <!-- Navbar -->
+       <nav
+      class="navbar navbar-expand-lg navbar-dark shadow-sm"
+      style="background: linear-gradient(135deg, #667eea, #764ba2)"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">
+          <i class="bi bi-cash-coin me-2"></i>Debt Management System
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/debts"
+                ><i class="bi bi-speedometer2 me-1"></i>Dashboard</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/reports"
+                ><i class="bi bi-file-earmark-bar-graph me-1"></i>Laporan</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout"
+                ><i class="bi bi-box-arrow-right me-1"></i>Logout</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
   <!-- Main Content -->
   <div class="container-fluid mt-4">
     <div class="row">
       <!-- Sidebar -->
       <div class="col-md-3 mb-3 order-first">
-        <div class="card shadow-sm border-0">
-          <div class="card-body p-3">
-            <h5 class="card-title fw-bold text-primary mb-3"><i class="fas fa-bars me-2"></i>Menu Admin</h5>
-            <ul class="list-group list-group-flush">
-              <!-- Dashboard -->
-              <li class="list-group-item border-0 mb-2">
-                <a href="/admin/beranda" class="text-decoration-none text-dark">
-                  <i class="fas fa-home me-2"></i>Dashboard
-                </a>
-              </li>
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-3">
+              <h5 class="card-title fw-bold text-primary mb-3">
+                <i class="bi bi-menu-button me-2"></i>Menu Utama
+              </h5>
+              <ul class="list-group list-group-flush">
+                <!-- Dashboard -->
+                <li class="list-group-item border-0 mb-2">
+                  <a href="/debts" class="text-decoration-none text-dark">
+                    <i class="bi bi-house-door me-2"></i>Dashboard
+                  </a>
+                </li>
 
-              <!-- Master -->
-              <li class="list-group-item border-0 mb-2">
-                <a href="#masterMenu" class="text-decoration-none text-dark d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
-                  <span>
-                    <i class="fas fa-database me-2"></i>Master
-                  </span>
-                  <i class="fas fa-chevron-down"></i>
-                </a>
-                <ul class="list-group list-group-flush collapse" id="masterMenu">
-                  <li class="list-group-item border-0 mb-2">
-                    <a href="/admin/master/users" class="text-decoration-none text-dark ps-4">
-                      <i class="fas fa-user me-2"></i>Data User
-                    </a>
-                  </li>
-                  <li class="list-group-item border-0 mb-2">
-                    <a href="/admin/master/guru" class="text-decoration-none text-dark ps-4">
-                      <i class="fas fa-user-tie me-2"></i>Data Ustads
-                    </a>
-                  </li>
-                  <li class="list-group-item border-0 mb-2">
-                    <a href="/admin/master/murid" class="text-decoration-none text-dark ps-4">
-                      <i class="fas fa-users me-2"></i>Data Santri
-                    </a>
-                  </li>
-                  <li class="list-group-item border-0 mb-2">
-                    <a href="kelas-master.html" class="text-decoration-none text-dark ps-4">
-                      <i class="fas fa-school me-2"></i>Data Kelas
-                    </a>
-                  </li>
-                  <li class="list-group-item border-0 mb-2">
-                    <a href="/admin/master/hafalan" class="text-decoration-none text-dark ps-4">
-                      <i class="fas fa-book me-2"></i>Data Hafalan
-                    </a>
-                  </li>
-                </ul>
-              </li>
+                <!-- Data Master -->
+                <li class="list-group-item border-0 mb-2">
+                  <a
+                    href="#masterMenu"
+                    class="text-decoration-none text-dark d-flex justify-content-between align-items-center"
+                    data-bs-toggle="collapse"
+                  >
+                    <span>
+                      <i class="bi bi-database me-2"></i>Data Master
+                    </span>
+                    <i class="bi bi-chevron-down"></i>
+                  </a>
+                  <ul
+                    class="list-group list-group-flush collapse"
+                    id="masterMenu"
+                  >
+                    <li class="list-group-item border-0 mb-2">
+                      <a
+                        href="/debts"
+                        class="text-decoration-none text-dark ps-4"
+                      >
+                        <i class="bi bi-journal-text me-2"></i>Data Hutang
+                      </a>
+                    </li>
+                    <li class="list-group-item border-0 mb-2">
+                      <a
+                        href="/agents"
+                        class="text-decoration-none text-dark ps-4"
+                      >
+                        <i class="bi bi-people me-2"></i>Daftar Agen
+                      </a>
+                    </li>
+                    <li class="list-group-item border-0 mb-2">
+                      <a
+                        href="/payment-methods"
+                        class="text-decoration-none text-dark ps-4"
+                      >
+                        <i class="bi bi-credit-card me-2"></i>Metode Pembayaran
+                      </a>
+                    </li>
+                  </ul>
+                </li>
 
-              <!-- Absensi -->
-              <li class="list-group-item border-0 mb-2">
-                <a href="#absensiMenu" class="text-decoration-none text-dark d-flex justify-content-between align-items-center" data-bs-toggle="collapse">
-                  <span>
-                    <i class="fas fa-clipboard-list me-2"></i>Absensi
-                  </span>
-                  <i class="fas fa-chevron-down"></i>
-                </a>
-                <ul class="list-group list-group-flush collapse" id="absensiMenu">
-                  <li class="list-group-item border-0 mb-2">
-                    <a href="/admin/absensi" class="text-decoration-none text-dark ps-4">
-                      <i class="fas fa-user-check me-2"></i>Kehadiran
-                    </a>
-                  </li>
-                  <li class="list-group-item border-0 mb-2">
-                    <a href="/admin/hafalan" class="text-decoration-none text-dark ps-4">
-                      <i class="fas fa-book-open me-2"></i>Hafalan
-                    </a>
-                  </li>
-                </ul>
-              </li>
-
-              <!-- Statistik -->
-              <li class="list-group-item border-0 mb-2">
-                <a href="statistik.html" class="text-decoration-none text-dark">
-                  <i class="fas fa-chart-bar me-2"></i>Statistik
-                </a>
-              </li>
-            </ul>
+                <!-- Laporan -->
+                <li class="list-group-item border-0 mb-2">
+                  <a href="/reports" class="text-decoration-none text-dark">
+                    <i class="bi bi-pie-chart me-2"></i>Laporan
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
 
