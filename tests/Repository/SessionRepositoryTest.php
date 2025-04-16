@@ -12,52 +12,110 @@ class SessionRepositoryTest extends TestCase
     private SessionRepository $sessionRepository;
     private UserRepository $userRepository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->userRepository = new UserRepository(Database::getConn());
         $this->sessionRepository = new SessionRepository(Database::getConn());
-
-        $this->sessionRepository->deleteAll();
-        $this->userRepository->deleteAll();
-
-        $user = new User();
-        $user->user_id = 'user_dummy00';
-        $user->username = 'user_dummy00@test.com';
-        $user->password = 'password_dummy00';
-        $user->role = 'santri';
-        $user->created_at = date('Y-m-d H:i:s');
-        $user->updated_at = date('Y-m-d H:i:s');
-        $this->userRepository->save($user);
+        $this->userRepository = new UserRepository(Database::getConn());
+        
+        $this->sessionRepository->deleteExpiredSessions();
+        $this->userRepository->deleteAllPermanently();
     }
 
     public function testSaveSuccess()
     {
+        // Setup user
+        $user = $this->createTestUser();
+        
+        // Create session
         $session = new Session();
-        $session->id = uniqid();
-        $session->user_id = "user_dummy00";
+        $session->user_id = $user->id;
+        $session->session_token = bin2hex(random_bytes(32));
+        $session->ip_address = '127.0.0.1';
+        $session->user_agent = 'PHPUnit';
+        $session->expiry_time = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        
         $this->sessionRepository->save($session);
-
-        $result = $this->sessionRepository->findById($session->id);
-        self::assertNotNull($result);
-        self::assertEquals($result->id, $session->id);
-        self::assertEquals($result->user_id, "user_dummy00");
+        $savedSession = $this->sessionRepository->findByToken($session->session_token);
+        
+        self::assertEquals($session->session_token, $savedSession->session_token);
+        self::assertEquals($user->id, $savedSession->user_id);
+        self::assertNotNull($savedSession->id);
     }
 
-    public function testDeleteByIdSuccess()
+    public function testFindByToken()
     {
-        $session = new Session();
-        $session->id = uniqid();
-        $session->user_id = "user_dummy00";
-        $this->sessionRepository->save($session);
-
-        $result = $this->sessionRepository->deleteById($session->id);
-        self::assertTrue($result);
+        // Setup
+        $session = $this->createTestSession();
+        
+        // Test find
+        $foundSession = $this->sessionRepository->findByToken($session->session_token);
+        
+        self::assertNotNull($foundSession);
+        self::assertEquals($session->id, $foundSession->id);
     }
 
-    public function testFindByIdNotFound()
+    public function testUpdateLastActivity()
     {
-        $result = $this->sessionRepository->findById('notFound');
+        $session = $this->createTestSession();
+        $newLastActivity = date('Y-m-d H:i:s');
+        
+        $session->last_activity = $newLastActivity;
+        $updatedSession = $this->sessionRepository->update($session);
+        
+        self::assertEquals($newLastActivity, $updatedSession->last_activity);
+    }
+
+    public function testDeleteSession()
+    {
+        $session = $this->createTestSession();
+        
+        $this->sessionRepository->delete($session->session_token);
+        $result = $this->sessionRepository->findByToken($session->session_token);
+        
         self::assertNull($result);
     }
 
+    public function testDeleteExpiredSessions()
+    {
+        // Create expired session
+        $expiredSession = $this->createTestSession();
+        $expiredSession->expiry_time = date('Y-m-d H:i:s', strtotime('-1 hour'));
+        $this->sessionRepository->update($expiredSession);
+        
+        // Delete expired
+        $this->sessionRepository->deleteExpiredSessions();
+        $result = $this->sessionRepository->findByToken($expiredSession->session_token);
+        
+        self::assertNull($result);
+    }
+
+    private function createTestUser(): User
+    {
+        $user = new User();
+        $user->username = uniqid();
+        $user->nama = 'Test User';
+        $user->email = 'test@session.com';
+        $user->password = 'password';
+        $user->role = 'user';
+        $user->status = 1;
+        $user->created_at = date('Y-m-d H:i:s');
+        $user->updated_at = date('Y-m-d H:i:s');
+        $this->userRepository->save($user);
+        return $this->userRepository->findById($user->username);
+    }
+
+    private function createTestSession(): Session
+    {
+        $user = $this->createTestUser();
+        
+        $session = new Session();
+        $session->user_id = $user->id;
+        $session->session_token = bin2hex(random_bytes(32));
+        $session->ip_address = '127.0.0.1';
+        $session->user_agent = 'PHPUnit';
+        $session->expiry_time = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        
+        $this->sessionRepository->save($session);
+        return $this->sessionRepository->findByToken($session->session_token);
+    }
 }

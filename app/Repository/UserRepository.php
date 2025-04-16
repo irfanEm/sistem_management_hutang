@@ -72,7 +72,8 @@ class UserRepository
                 $user->created_at,
                 $user->updated_at,
             ]);
-
+        
+            $user->id = $this->connection->lastInsertId();
             return $user;
         } catch (PDOException $err) {
             error_log("Error saat menyimpan user: " . $err->getMessage());
@@ -122,6 +123,17 @@ class UserRepository
             return $user;
         }
     }
+
+    public function deletePermanently(string $username): bool
+    {
+        try {
+            $statement = $this->connection->prepare("DELETE FROM users WHERE username = ?");
+            return $statement->execute([$username]);
+        } catch (PDOException $err) {
+            error_log("Error saat menghapus data secara permanen: " . $err->getMessage());
+            return false;
+        }
+    }
    
 //     public function findByUsername(string $username): ?User
 //     {
@@ -137,17 +149,6 @@ class UserRepository
 //         } catch (PDOException $err) {
 //             error_log("Error saat mencari user: " . $err->getMessage());
 //             return null;
-//         }
-//     }
-
-//     public function deletePermanently(string $user_id): bool
-//     {
-//         try {
-//             $statement = $this->connection->prepare("DELETE FROM users WHERE user_id = ?");
-//             return $statement->execute([$user_id]);
-//         } catch (PDOException $err) {
-//             error_log("Error saat menghapus data secara permanen: " . $err->getMessage());
-//             return false;
 //         }
 //     }
 
