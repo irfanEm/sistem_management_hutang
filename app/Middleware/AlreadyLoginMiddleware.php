@@ -1,12 +1,12 @@
 <?php
 
-namespace IRFANM\SIASHAF\Middleware;
+namespace IRFANM\SIMAHU\Middleware;
 
-use IRFANM\SIASHAF\App\View;
-use IRFANM\SIASHAF\Config\Database;
-use IRFANM\SIASHAF\Repository\SessionRepository;
-use IRFANM\SIASHAF\Repository\UserRepository;
-use IRFANM\SIASHAF\Service\SessionService;
+use IRFANM\SIMAHU\App\View;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Repository\SessionRepository;
+use IRFANM\SIMAHU\Repository\UserRepository;
+use IRFANM\SIMAHU\Service\SessionService;
 
 class AlreadyLoginMiddleware implements Middleware
 {

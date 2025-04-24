@@ -1,6 +1,6 @@
 <?php
 
-namespace IRFANM\SIASHAF\Exception;
+namespace IRFANM\SIMAHU\Exception;
 
 class ValidationException extends \Exception
 {

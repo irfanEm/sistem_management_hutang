@@ -1,8 +1,8 @@
 <?php
 
-namespace IRFANM\SIASHAF\Model;
+namespace IRFANM\SIMAHU\Model;
 
-use IRFANM\SIASHAF\Domain\User;
+use IRFANM\SIMAHU\Domain\User;
 
 class UserLoginResponse
 {

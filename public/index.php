@@ -2,12 +2,12 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use IRFANM\SIASHAF\App\Router;
-use IRFANM\SIASHAF\Controller\HomeController;
-use IRFANM\SIASHAF\Controller\TestController;
-use IRFANM\SIASHAF\Controller\UserController;
-use IRFANM\SIASHAF\Middleware\AlreadyLoginMiddleware;
-use IRFANM\SIASHAF\Middleware\MustLoginMiddleware;
+use IRFANM\SIMAHU\App\Router;
+use IRFANM\SIMAHU\Controller\HomeController;
+use IRFANM\SIMAHU\Controller\TestController;
+use IRFANM\SIMAHU\Controller\UserController;
+use IRFANM\SIMAHU\Middleware\AlreadyLoginMiddleware;
+use IRFANM\SIMAHU\Middleware\MustLoginMiddleware;
 
 Router::route("GET", "/", HomeController::class, "index", []);
 Router::route("GET", "/test-route", TestController::class, "index", []);

@@ -1,6 +1,6 @@
 <?php
 
-namespace IRFANM\SIASHAF\App;
+namespace IRFANM\SIMAHU\App;
 
 class Router
 {

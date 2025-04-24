@@ -1,6 +1,6 @@
 <?php
 
-namespace IRFANM\SIASHAF\Config;
+namespace IRFANM\SIMAHU\Config;
 
 use PDO;
 

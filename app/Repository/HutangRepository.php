@@ -1,8 +1,8 @@
 <?php
 
-namespace IRFANM\SIASHAF\Repository;
+namespace IRFANM\SIMAHU\Repository;
 
-use IRFANM\SIASHAF\Domain\Hutang;
+use IRFANM\SIMAHU\Domain\Hutang;
 use PDO;
 use PDOException;
 
@@ -151,7 +151,7 @@ class HutangRepository
                 $result[] = $this->mapRowToData($row);
             }
             
-            error_log("query : " . $query);
+            // error_log("query : " . $query);
             return $result;
         } catch(PDOException $err) {
             error_log("Gagal mengambil data hutang: " . $err->getMessage());

@@ -1,10 +1,9 @@
 <?php
 
-namespace IRFANM\SIASHAF\Model;
+namespace IRFANM\SIMAHU\Model;
 
 class UserLoginRequest
 {
-    public ?string $username = null;
-    public ?string $password = null;
-
+    public ?string $id = null;
+    public ?string $password =  null;
 }

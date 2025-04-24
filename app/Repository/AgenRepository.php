@@ -1,8 +1,8 @@
 <?php
 
-namespace IRFANM\SIASHAF\Repository;
+namespace IRFANM\SIMAHU\Repository;
 
-use IRFANM\SIASHAF\Domain\Agen;
+use IRFANM\SIMAHU\Domain\Agen;
 use PDO;
 use PDOException;
 

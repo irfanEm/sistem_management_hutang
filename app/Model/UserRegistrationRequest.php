@@ -1,14 +1,13 @@
 <?php
 
-namespace IRFANM\SIASHAF\Model;
+namespace IRFANM\SIMAHU\Model;
 
-class UserRegistrationRequest
+class UserRegisterRequest
 {
-    public ?string $user_id = null;
-    public ?string $name = null;
     public ?string $username = null;
+    public ?string $nama = null;
+    public ?string $email = null;
     public ?string $password = null;
-    public ?string $password_konfirmation = null;
     public ?string $role = null;
-
 }
+

@@ -1,14 +1,14 @@
 <?php
 
-namespace IRFANM\SIASHAF\Service;
+namespace IRFANM\SIMAHU\Service;
 
-use IRFANM\SIASHAF\Config\Database;
-use IRFANM\SIASHAF\Domain\Agen;
-use IRFANM\SIASHAF\Exception\ValidationException;
-use IRFANM\SIASHAF\Model\AgenCreateRequest;
-use IRFANM\SIASHAF\Model\AgenCreateResponse;
-use IRFANM\SIASHAF\Model\AgenUpdateRequest;
-use IRFANM\SIASHAF\Repository\AgenRepository;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Domain\Agen;
+use IRFANM\SIMAHU\Exception\ValidationException;
+use IRFANM\SIMAHU\Model\AgenCreateRequest;
+use IRFANM\SIMAHU\Model\AgenCreateResponse;
+use IRFANM\SIMAHU\Model\AgenUpdateRequest;
+use IRFANM\SIMAHU\Repository\AgenRepository;
 use PHPUnit\Framework\TestCase;
 
 class AgenServiceTest extends TestCase
@@ -87,7 +87,41 @@ class AgenServiceTest extends TestCase
         self::expectException(ValidationException::class);
         $this->agenService->updateAgen($request);
     }
+    
+    public function testGetAgen()
+    {
+        $this->createAgen('AG-005', 'Agen X Five');
+        $this->createAgen('AG-003', 'Agen X Three');
+        $this->createAgen('AG-001', 'Agen X One');
 
+        $agenXOne = $this->agenService->getAgen("AG-001");
+        self::assertNotNull($agenXOne);
+        self::assertEquals('AG-001', $agenXOne->kode_agen);
+        self::assertEquals('Agen X One', $agenXOne->nama_agen);
+
+        $agens = $this->agenService->getAgen();
+        self::assertCount(3, $agens);
+        foreach($agens as $agen){
+            self::assertNotNull($agen['kode_agen']);
+            self::assertNotNull($agen['nama_agen']);
+            self::assertEquals('belum ada', $agen['kontak']);
+            self::assertNotNull($agen['created_at']);
+            self::assertNotNull($agen['updated_at']);
+        }
+    }
+
+    public function testDeleteAgen()
+    {
+        $agen = $this->createAgen("AG-003", "Agen X Three");
+
+        $result = $this->agenService->deleteAgen($agen->agen->kode_agen);
+        self::assertTrue($result);
+
+        $nfAgen = $this->agenService->getAgen($agen->agen->kode_agen);
+        self::assertNull($nfAgen);
+    }
+
+    // method ini ditarub dibawah sendiri
     private function createAgen(string $kode_agen = '', string $nama_agen = ''): AgenCreateResponse
     {
         $agenCreateReq = new AgenCreateRequest();

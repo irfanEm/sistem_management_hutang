@@ -1,16 +1,16 @@
 <?php
 
-namespace IRFANM\SIASHAF\Service;
+namespace IRFANM\SIMAHU\Service;
 
 use Exception;
-use IRFANM\SIASHAF\Domain\Agen;
-use IRFANM\SIASHAF\Config\Database;
-use IRFANM\SIASHAF\Model\AgenCreateRequest;
-use IRFANM\SIASHAF\Model\AgenUpdateRequest;
-use IRFANM\SIASHAF\Model\AgenCreateResponse;
-use IRFANM\SIASHAF\Model\AgenUpdateResponse;
-use IRFANM\SIASHAF\Repository\AgenRepository;
-use IRFANM\SIASHAF\Exception\ValidationException;
+use IRFANM\SIMAHU\Domain\Agen;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Model\AgenCreateRequest;
+use IRFANM\SIMAHU\Model\AgenUpdateRequest;
+use IRFANM\SIMAHU\Model\AgenCreateResponse;
+use IRFANM\SIMAHU\Model\AgenUpdateResponse;
+use IRFANM\SIMAHU\Repository\AgenRepository;
+use IRFANM\SIMAHU\Exception\ValidationException;
 
 class AgenService
 {
@@ -99,5 +99,36 @@ class AgenService
         }
 
         return $agen;
+    }
+
+    public function getAgen(?string $kode_agen = null): Agen | array | null
+    {
+        if($kode_agen !== null){
+            try{
+                return $this->agenRepo->findById($kode_agen);
+            }catch(Exception $err){
+                throw $err;
+            }
+        }
+
+        try{
+            return $this->agenRepo->getAll();
+        }catch(Exception $err){
+            throw $err;
+        }
+    }
+
+    public function deleteAgen(string $kode_agen): bool
+    {
+        $agen = $this->agenRepo->findById($kode_agen);
+        if($agen === null){
+            throw new Exception("Agen dengan kode : {$kode_agen} tidak ditemukan !");
+        }
+        try{
+            return $this->agenRepo->deletePermanently($kode_agen);
+        }catch(Exception $err){
+            throw $err;
+            return false;
+        }
     }
 }

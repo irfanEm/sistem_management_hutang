@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "IRFANM\\SIASHAF\\": "app"
+      "IRFANM\\SIMAHU\\": "app"
     },
     "files": [
       "app/Helper/functions.php"
@@ -27,7 +27,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "IRFANM\\SIASHAF\\": "tests"
+      "IRFANM\\SIMAHU\\": "tests"
     }
   },
   "scripts": {

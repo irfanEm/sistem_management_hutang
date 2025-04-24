@@ -1,9 +1,9 @@
 <?php
 
-namespace IRFANM\SIASHAF\Repository;
+namespace IRFANM\SIMAHU\Repository;
 
-use IRFANM\SIASHAF\Config\Database;
-use IRFANM\SIASHAF\Domain\PaymentMethod;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Domain\PaymentMethod;
 use PHPUnit\Framework\TestCase;
 
 class PaymentMethodRepositoryTest extends TestCase

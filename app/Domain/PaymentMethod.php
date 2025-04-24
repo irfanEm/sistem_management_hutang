@@ -1,6 +1,6 @@
 <?php
 
-namespace IRFANM\SIASHAF\Domain;
+namespace IRFANM\SIMAHU\Domain;
 
 class PaymentMethod
 {

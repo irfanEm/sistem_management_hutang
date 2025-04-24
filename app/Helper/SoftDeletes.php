@@ -1,6 +1,6 @@
 <?php
 
-namespace IRFANM\SIASHAF\Helper;
+namespace IRFANM\SIMAHU\Helper;
 
 use PDO;
 

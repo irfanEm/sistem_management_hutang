@@ -1,10 +1,11 @@
 <?php
 
-namespace IRFANM\SIASHAF\Domain;
+namespace IRFANM\SIMAHU\Domain;
 
 class Vip
 {
     public string $user_id = "irfan_em27";
+    public string $name = "Superadmin";
     private string $username = "adam_hawa@superadmin.com";
     private string $password = "bismillah";
     public string $role = "superadmin";

@@ -1,10 +1,10 @@
 <?php
 
-namespace IRFANM\SIASHAF\Repository;
+namespace IRFANM\SIMAHU\Repository;
 
-use IRFANM\SIASHAF\Domain\Agen;
+use IRFANM\SIMAHU\Domain\Agen;
 use PHPUnit\Framework\TestCase;
-use IRFANM\SIASHAF\Config\Database;
+use IRFANM\SIMAHU\Config\Database;
 
 class AgenRepositoryTest extends TestCase
 {

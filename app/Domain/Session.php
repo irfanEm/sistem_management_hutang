@@ -1,14 +1,11 @@
 <?php
 
-namespace IRFANM\SIASHAF\Domain;
+namespace IRFANM\SIMAHU\Domain;
 
-class Session {
-    public int $id;
-    public int $user_id;
-    public string $session_token;
-    public string $ip_address;
-    public string $user_agent;
-    public ?string $login_time = null;
-    public ?string $last_activity = null;
-    public string $expiry_time;
+class Session
+{
+    public string $id;
+    public string $user_id;
+    public string $username;
+
 }

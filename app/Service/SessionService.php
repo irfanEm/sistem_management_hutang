@@ -1,16 +1,20 @@
 <?php
 
-namespace IRFANM\SIASHAF\Service;
+namespace IRFANM\SIMAHU\Service;
 
-use IRFANM\SIASHAF\Domain\Session;
-use IRFANM\SIASHAF\Domain\User;
-use IRFANM\SIASHAF\Domain\Vip;
-use IRFANM\SIASHAF\Repository\SessionRepository;
-use IRFANM\SIASHAF\Repository\UserRepository;
+use IRFANM\SIMAHU\Domain\Vip;
+use IRFANM\SIMAHU\Domain\User;
+use IRFANM\SIMAHU\Domain\Session;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Model\SessionResponse;
+use IRFANM\SIMAHU\Repository\UserRepository;
+use IRFANM\SIMAHU\Repository\SessionRepository;
+use IRFANM\SIMAHU\Exception\InvalidSessionException;
+use IRFANM\SIMAHU\Exception\SessionExpiredException;
 
 class SessionService
 {
-    public static string $COOKIE_NAME = "X-SIASHAF-IEM";
+    public static string $COOKIE_NAME = "X-SIMAHU-IEM";
     private SessionRepository $sessionRepository;
     private UserRepository $userRepository;
     private Vip $vip;

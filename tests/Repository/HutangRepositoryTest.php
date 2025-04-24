@@ -1,13 +1,13 @@
 <?php
 
-namespace IRFANM\SIASHAF\Repository;
+namespace IRFANM\SIMAHU\Repository;
 
-use IRFANM\SIASHAF\Domain\Agen;
-use IRFANM\SIASHAF\Domain\User;
+use IRFANM\SIMAHU\Domain\Agen;
+use IRFANM\SIMAHU\Domain\User;
 use PHPUnit\Framework\TestCase;
-use IRFANM\SIASHAF\Domain\Hutang;
-use IRFANM\SIASHAF\Config\Database;
-use IRFANM\SIASHAF\Domain\PaymentMethod;
+use IRFANM\SIMAHU\Domain\Hutang;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Domain\PaymentMethod;
 
 class HutangRepositoryTest extends TestCase
 {

@@ -1,24 +1,28 @@
 <?php
 
-namespace IRFANM\SIASHAF\Controller;
+namespace IRFANM\SIMAHU\Controller;
 
 use Exception;
-use IRFANM\SIASHAF\App\View;
-use IRFANM\SIASHAF\Config\Database;
-use IRFANM\SIASHAF\Exception\ValidationException;
-use IRFANM\SIASHAF\Model\UserLoginRequest;
-use IRFANM\SIASHAF\Model\UserRegistrationRequest;
-use IRFANM\SIASHAF\Model\UserUpdateRequest;
-use IRFANM\SIASHAF\Repository\SessionRepository;
-use IRFANM\SIASHAF\Repository\UserRepository;
-use IRFANM\SIASHAF\Service\SessionService;
-use IRFANM\SIASHAF\Service\UserService;
+use IRFANM\SIMAHU\App\View;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Service\UserService;
+use IRFANM\SIMAHU\Model\UserLoginRequest;
+use IRFANM\SIMAHU\Service\SessionService;
+use IRFANM\SIMAHU\Model\UserRegisterRequest;
+use IRFANM\SIMAHU\Repository\UserRepository;
+use IRFANM\SIMAHU\Repository\SessionRepository;
+use IRFANM\SIMAHU\Exception\ValidationException;
+use IRFANM\SIMAHU\Model\UserProfileUpdateRequest;
+use IRFANM\SIMAHU\Model\UserPasswordUpdateRequest;
 
 class UserController
 {
     private UserService $userService;
     private SessionService $sessionService;
 
+    /**
+     * Class constructor.
+     */
     public function __construct()
     {
         $connection = Database::getConn();
@@ -28,223 +32,132 @@ class UserController
         $sessionRepository = new SessionRepository($connection);
         $this->sessionService = new SessionService($sessionRepository, $userRepository);
     }
-    /**
-     * Menampilkan semua pengguna
-     */
-    public function home(): void
-    {
-        $users = $this->userService->getAllUsers();
-        $currentUser = $this->sessionService->current();
-
-        View::render("/Beranda/index", [
-            "title" => "Beranda",
-            "users" => $users,
-            "curentUser" => $currentUser,
-        ]);
-    }
-
-    /**
-     * Menampilkan semua pengguna
-     */
-    public function index(): void
-    {
-        $users = $this->userService->getAllActiveUsers();
-        $currentUser = $this->sessionService->current();
-
-        View::render("/User/index", [
-            "title" => "Data users",
-            "users" => $users,
-            "curentUser" => $currentUser,
-        ]);
-    }
-
-    /**
-     * Mengakses halaman register
-     *
-     */
     public function register()
     {
-        View::render("User/tambah", [
-            "title" => "Tambah user",
+        View::render('User/register', [
+            "title" => "Register new User",
         ]);
     }
-
-    /**
-     * Menambahkan pengguna baru
-     */
-    public function postRegister(): void
+    public function postRegister()
     {
-        $request = new UserRegistrationRequest();
+        $request = new UserRegisterRequest();
+        $request->id = $_POST['id'];
         $request->name = $_POST['name'];
-        $request->username = $_POST['username'];
         $request->password = $_POST['password'];
-        $request->password_konfirmation = $_POST['password_konfirmation'];
-        $request->role = $_POST['role'];
 
-        try {
-            $this->userService->createUser($request);
-            $users = $this->userService->getAllUsers();
-            View::render("User/index", [
-                "title" => "Data Users",
-                "users" => $users,
-                "error" => "Berhasil menambahkan user baru",
-                "status" => "success"
-            ]);
-        }catch(ValidationException $err){
-            View::render("User/tambah", [
-                "title" => "Tambah user baru.",
-                "error" => $err->getMessage(),
-                "status" => "danger"
+        try{
+            $this->userService->register($request);
+            View::redirect('/users/login');
+        }catch(ValidationException $exception){
+            View::render('User/register', [
+                "title" => "Register new User",
+                "error" => $exception->getMessage()
             ]);
         }
     }
 
-    /**
-     * login user
-     */
     public function login()
     {
-        View::render("User/login", [
-            "title" => "Login user",
+        View::render('User/login', [
+            "title" => "Login User"
         ]);
     }
 
-    /**
-     * handle login post
-     */
     public function postLogin()
     {
         $request = new UserLoginRequest();
-        $request->username = $_POST['username'];
+        $request->id = $_POST['id'];
         $request->password = $_POST['password'];
 
         try {
             $response = $this->userService->login($request);
-            $this->sessionService->create($response->user);
-            View::redirect("/admin/beranda");
-        }catch(ValidationException $err) {
-            View::render("User/login", [
+            $this->sessionService->create($response->user->id);
+            View::redirect('/');
+        } catch (ValidationException $exception) {
+            View::render('User/login', [
                 "title" => "Login user",
-                "error" => $err->getMessage(),
+                "error" => $exception->getMessage()
             ]);
-
         }
     }
 
-    /**
-     * function logout
-     */
     public function logout()
     {
         $this->sessionService->destroy();
-        View::redirect("/users/login");
+        View::redirect('/');
     }
 
-    /**
-     * Menampilkan form update
-     */
-    public function update(string $user_id)
+    public function updateProfile()
     {
-        $user = $this->userService->findUserById($user_id);
-        View::render("User/edit", [
-            'title' => 'Update user',
-            'user_id' => $user->user_id,
-            'nama' => $user->name,
-            'username' => $user->username,
-            'role' => $user->role,
-            'created_at' => $user->created_at
+        $user = $this->sessionService->current();
 
+        View::render('User/profile', [
+            "title" => "Update User Profile",
+            "user" => [
+                'id' => $user->id,
+                'name' => $user->name
+            ]
         ]);
     }
 
-    /**
-     * Memperbarui data pengguna
-     */
-    public function postUpdate(): void
+    public function postUpdateProfile()
     {
-        $request = new UserUpdateRequest();
-        $request->user_id = $_POST['user_id'];
+        $user = $this->sessionService->current();
+
+        $request = new UserProfileUpdateRequest();
+        $request->id = $user->id;
         $request->name = $_POST['name'];
-        $request->username = $_POST['username'];
-        $request->role = $_POST['role'];
 
-        try {
-            $this->userService->updateUser($request);
-            $users = $this->userService->getAllUsers();
-            View::render("User/index", [
-                "title" => "Data Users",
-                "users" => $users,
-                "error" => "Berhasil mengubah data user.",
-                "status" => "success"
+        try{
+            $this->userService->updateProfile($request);
+            View::redirect('/');
+        }catch(ValidationException $exception){
+
+            View::render('User/profile', [
+                "title" => "Update User Profile",
+                "error" => $exception->getMessage(),
+                "user" => [
+                    'id' => $user->id,
+                    'name' => $_POST['name']
+                ]
             ]);
-        }catch(\Exception $e) {
-            View::render("User/edit", [
-                "title" => "Update user", 
-                "error" => $e->getMessage(),
-                'user_id' => $request->user_id,
-                'nama' => $request->name,
-                'username' => $request->username,
-                'role' => $request->role,
-            ]);
+
         }
     }
 
-    /**
-     * Menampilkan detail pengguna tertentu
-     */
-    public function show(string $user_id): void
+    public function updatePassword()
     {
-        $user = $this->userService->findUserById($user_id);
+        $user = $this->sessionService->current();
 
-        View::render('User/detail', [
-            'title' => 'Detail User',
-            'user_id' => $user->user_id,
-            'nama' => $user->name,
-            'username' => $user->username,
-            'role' => $user->role,
-            'created_at' => $user->created_at
+        View::render('User/password', [
+            "title" => "Update User Password",
+            "user" => [
+                'id' => $user->id
+            ]
         ]);
     }
 
-    /**
-     * Soft delete pengguna tertentu
-     */
-    public function hapus(string $user_id): void
+    public function postUpdatePassword()
     {
-        if ($this->userService->deleteUserById($user_id)) {
-            echo json_encode(["message" => "User berhasil dihapus (soft delete)."]);
-        } else {
-            echo json_encode(["error" => "User tidak ditemukan."]);
+        $user = $this->sessionService->current();
+
+        $request = new UserPasswordUpdateRequest();
+        $request->id = $user->id;
+        $request->oldPassword = $_POST['oldPassword'];
+        $request->newPassword = $_POST['newPassword'];
+
+        try{
+            $this->userService->updatePassword($request);
+            View::redirect('/');
+        }catch(ValidationException $exception){
+            View::render('User/password', [
+                "title" => "Update User Password",
+                "error" => $exception->getMessage(),
+                "user" => [
+                    'id' => $user->id
+                ]
+            ]);
         }
     }
 
-    /**
-     * Hapus pengguna tertentu secara permanen
-     */
-    public function destroyPermanently(string $user_id): void
-    {
-        if ($this->userService->deleteUserPermanently($user_id)) {
-            echo json_encode(["message" => "User berhasil dihapus secara permanen."]);
-        } else {
-            echo json_encode(["error" => "User tidak ditemukan."]);
-        }
-    }
-
-    /**
-     * Soft delete semua pengguna
-     */
-    public function destroyAll(): void
-    {
-        $this->userService->deleteAllUsers();
-        echo json_encode(["message" => "Semua pengguna berhasil dihapus (soft delete)."]);
-    }
-
-    /**
-     * Hapus semua pengguna secara permanen
-     */
-    public function destroyAllPermanently(): void
-    {
-        $this->userService->deleteAllUsersPermanently();
-        echo json_encode(["message" => "Semua pengguna berhasil dihapus secara permanen."]);
-    }
 }

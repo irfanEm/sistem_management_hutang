@@ -1,8 +1,8 @@
 <?php
 
-namespace IRFANM\SIASHAF\Repository;
+namespace IRFANM\SIMAHU\Repository;
 
-use IRFANM\SIASHAF\Domain\PaymentMethod;
+use IRFANM\SIMAHU\Domain\PaymentMethod;
 use PDO;
 use PDOException;
 
@@ -108,13 +108,44 @@ class PaymentMethodRepository
         }
     }
 
-    public function findAll(string $condition = "", array $params = []): array
+    public function count(string $condition = "", array $params = []): int
     {
         try {
-            $query = "SELECT * FROM ".self::TABLE_NAME;
+            $query = "SELECT COUNT(*) as total FROM " . self::TABLE_NAME;
             
             if (!empty($condition)) {
                 $query .= " WHERE " . $condition;
+            }
+            
+            $statement = $this->connection->prepare($query);
+            $statement->execute($params);
+            
+            return (int) $statement->fetchColumn();
+        } catch (PDOException $err) {
+            error_log("Error PaymentMethodRepository::count: " . $err->getMessage());
+            return 0;
+        }
+    }
+
+    public function findAll(
+        string $condition = "", 
+        array $params = [], 
+        int $limit = 0, 
+        int $offset = 0
+    ): array {
+        try {
+            $query = "SELECT * FROM " . self::TABLE_NAME;
+            
+            if (!empty($condition)) {
+                $query .= " WHERE " . $condition;
+            }
+            
+            if ($limit > 0) {
+                $query .= " LIMIT " . $limit;
+                
+                if ($offset > 0) {
+                    $query .= " OFFSET " . $offset;
+                }
             }
             
             $statement = $this->connection->prepare($query);

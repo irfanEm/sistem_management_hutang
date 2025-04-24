@@ -1,11 +1,11 @@
 <?php
 
-namespace IRFANM\SIASHAF\App;
+namespace IRFANM\SIMAHU\App;
 
-use IRFANM\SIASHAF\Config\Database;
-use IRFANM\SIASHAF\Repository\SessionRepository;
-use IRFANM\SIASHAF\Repository\UserRepository;
-use IRFANM\SIASHAF\Service\SessionService;
+use IRFANM\SIMAHU\Config\Database;
+use IRFANM\SIMAHU\Repository\SessionRepository;
+use IRFANM\SIMAHU\Repository\UserRepository;
+use IRFANM\SIMAHU\Service\SessionService;
 
 class View
 {

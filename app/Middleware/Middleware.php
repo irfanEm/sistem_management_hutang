@@ -1,6 +1,6 @@
 <?php
 
-namespace IRFANM\SIASHAF\Middleware;
+namespace IRFANM\SIMAHU\Middleware;
 
 interface Middleware
 {
